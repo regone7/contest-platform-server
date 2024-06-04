@@ -62,6 +62,28 @@ async function run() {
             const result = await userCollection.deleteOne(quary)
             res.send(result)
         })
+        app.get('/userRole/:id', async (req, res) => {
+            // console.log('cookirss',req.cookies)
+            const id = req.params.id;
+            const quary = { _id: new ObjectId(id) }
+            const cursor = userCollection.findOne(quary);
+            const result = await cursor;
+            res.send(result)
+        })
+        app.put('/userupds/:id', async (req, res) => {
+            const id = req.params.id
+            // console.log(id)
+            const updateData = req.body
+            const query = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updateDoc = {
+                $set: {
+                    ...updateData,
+                },
+            }
+            const result = await userCollection.updateOne(query, updateDoc, options)
+            res.send(result)
+        })
 
 
         await client.db("admin").command({ ping: 1 });
