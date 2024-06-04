@@ -97,7 +97,42 @@ async function run() {
 
         })
         //contentcreatercontrole
-        
+        app.get('/addcontentss/:email', async (req, res) => {
+            const email = req.params.email;
+            const quary = { email: email }
+            const result = await addcontentCollection.find(quary).toArray();
+            res.send(result)
+        })
+        //contentcreatercontrole
+        app.delete('/addsubdelete/:id', async (req, res) => {
+            const id = req.params.id;
+            const quary = { _id: new ObjectId(id) }
+            const result = await addcontentCollection.deleteOne(quary)
+            res.send(result)
+        })
+        app.get('/updatecontest/:id', async (req, res) => {
+            // console.log('cookirss',req.cookies)
+            const id = req.params.id;
+            const quary = { _id: new ObjectId(id) }
+            const cursor = addcontentCollection.findOne(quary);
+            const result = await cursor;
+            res.send(result)
+        })
+        app.put('/updatecontests/:id', async (req, res) => {
+            const id = req.params.id
+            // console.log(id)
+            const updateData = req.body
+            const query = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updateDoc = {
+                $set: {
+                    ...updateData,
+                },
+            }
+            const result = await addcontentCollection.updateOne(query, updateDoc, options)
+            res.send(result)
+            console.log(updateDoc)
+        })
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
