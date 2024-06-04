@@ -31,6 +31,7 @@ async function run() {
         await client.connect();
 
         const userCollection = client.db("contestDB").collection("users");
+        const addcontentCollection = client.db("contestDB").collection("contents");
 
         // Send a ping to confirm a successful connection
 
@@ -56,12 +57,14 @@ async function run() {
             const result = await userCollection.find().toArray()
             res.send(result)
         })
+        // admincontrol
         app.delete('/userdelete/:id', async (req, res) => {
             const id = req.params.id;
             const quary = { _id: new ObjectId(id) }
             const result = await userCollection.deleteOne(quary)
             res.send(result)
         })
+        // admincontrol
         app.get('/userRole/:id', async (req, res) => {
             // console.log('cookirss',req.cookies)
             const id = req.params.id;
@@ -70,6 +73,7 @@ async function run() {
             const result = await cursor;
             res.send(result)
         })
+        // admincontrol
         app.put('/userupds/:id', async (req, res) => {
             const id = req.params.id
             // console.log(id)
@@ -84,7 +88,16 @@ async function run() {
             const result = await userCollection.updateOne(query, updateDoc, options)
             res.send(result)
         })
+        //contentcreatercontrole
+        app.post('/addcontents', async (req, res) => {
+            const infouser = req.body;
+            console.log()
+            const result = await addcontentCollection.insertOne(infouser);
+            res.send(result)
 
+        })
+        //contentcreatercontrole
+        
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
