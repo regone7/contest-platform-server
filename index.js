@@ -100,6 +100,30 @@ async function run() {
             const result = await addcontentCollection.deleteOne(quary)
             res.send(result)
         })
+        // admincontrol
+        app.get('/conformss/:id', async (req, res) => {
+            const id = req.params.id;
+            const quary = { _id: new ObjectId(id) }
+            const cursor = addcontentCollection.findOne(quary);
+            const result = await cursor;
+            res.send(result)
+        })
+        // admincontrol
+        app.put('/updatecontests/:id', async (req, res) => {
+            const id = req.params.id
+            // console.log(id)
+            const updateData = req.body
+            const query = { _id: new ObjectId(id) }
+            const options = { upsert: true }
+            const updateDoc = {
+                $set: {
+                    ...updateData,
+                },
+            }
+            const result = await addcontentCollection.updateOne(query, updateDoc, options)
+            res.send(result)
+            console.log(updateDoc)
+        })
         //contentcreatercontrole
         app.post('/addcontents', async (req, res) => {
             const infouser = req.body;
