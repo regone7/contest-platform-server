@@ -88,6 +88,18 @@ async function run() {
             const result = await userCollection.updateOne(query, updateDoc, options)
             res.send(result)
         })
+        // admincontrol
+        app.get('/managecontent', async (req, res) => {
+            const result = await addcontentCollection.find().toArray()
+            res.send(result)
+        })
+        // admincontrol
+        app.delete('/contentcrdelete/:id', async (req, res) => {
+            const id = req.params.id;
+            const quary = { _id: new ObjectId(id) }
+            const result = await addcontentCollection.deleteOne(quary)
+            res.send(result)
+        })
         //contentcreatercontrole
         app.post('/addcontents', async (req, res) => {
             const infouser = req.body;
@@ -110,6 +122,7 @@ async function run() {
             const result = await addcontentCollection.deleteOne(quary)
             res.send(result)
         })
+        //contentcreatercontrole
         app.get('/updatecontest/:id', async (req, res) => {
             // console.log('cookirss',req.cookies)
             const id = req.params.id;
@@ -118,6 +131,7 @@ async function run() {
             const result = await cursor;
             res.send(result)
         })
+        //contentcreatercontrole
         app.put('/updatecontests/:id', async (req, res) => {
             const id = req.params.id
             // console.log(id)
