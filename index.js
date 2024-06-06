@@ -57,6 +57,11 @@ async function run() {
             const result = await userCollection.find().toArray()
             res.send(result)
         })
+        // all contest
+        app.get('/allcontests', async (req, res) => {
+            const result = await addcontentCollection.find().toArray()
+            res.send(result)
+        })
         // admincontrol
         app.delete('/userdelete/:id', async (req, res) => {
             const id = req.params.id;
