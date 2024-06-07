@@ -62,10 +62,19 @@ async function run() {
             const result = await addcontentCollection.find().toArray()
             res.send(result)
         })
+        // all contest diteals
+        app.get('/diteals/:id', async (req, res) => {
+            const id = req.params.id;
+            const quary = { _id: new ObjectId(id) }
+            const cursor = addcontentCollection.findOne(quary);
+            const result = await cursor;
+            res.send(result)
+            
+        })
         // home page search
         app.get('/allcontstsearch', async (req, res) => {
             const search = req.query;
-            console.log(search)
+            // console.log(search)
             const quary={
                 contest_name:{$regex: search.search, $options: 'i'}
             }
