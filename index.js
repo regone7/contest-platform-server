@@ -78,7 +78,7 @@ async function run() {
             const quary={
                 contest_name:{$regex: search.search, $options: 'i'}
             }
-            const result = await addcontentCollection.find(quary).toArray()
+            const result = await addcontentCollection.find(quary).sort({ attempt: -1 }).toArray()
             res.send(result)
         })
         // admincontrol
