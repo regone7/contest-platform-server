@@ -62,6 +62,16 @@ async function run() {
             const result = await addcontentCollection.find().toArray()
             res.send(result)
         })
+        // home page search
+        app.get('/allcontstsearch', async (req, res) => {
+            const search = req.query;
+            console.log(search)
+            const quary={
+                contest_name:{$regex: search.search, $options: 'i'}
+            }
+            const result = await addcontentCollection.find(quary).toArray()
+            res.send(result)
+        })
         // admincontrol
         app.delete('/userdelete/:id', async (req, res) => {
             const id = req.params.id;
