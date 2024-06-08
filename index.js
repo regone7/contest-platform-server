@@ -47,6 +47,7 @@ async function run() {
             res.send(result)
 
         })
+        // roll
         app.get('/user/:email', async (req, res) => {
             const email = req.params.email
             console.log(email)
@@ -69,18 +70,33 @@ async function run() {
             const cursor = addcontentCollection.findOne(quary);
             const result = await cursor;
             res.send(result)
-            
+
         })
         // home page search
         app.get('/allcontstsearch', async (req, res) => {
             const search = req.query;
             // console.log(search)
-            const quary={
-                contest_name:{$regex: search.search, $options: 'i'}
+            const quary = {
+                contest_name: { $regex: search.search, $options: 'i' }
             }
             const result = await addcontentCollection.find(quary).sort({ attempt: -1 }).toArray()
             res.send(result)
         })
+        // app.patch('/updatecontestss/:email', async (req, res) => {
+        //     const email = req.params.email;
+        //     const query = { email: email };
+        //     const updateData = req.body
+            
+        //     const options = { upsert: true }
+        //     const updateDoc = {
+        //         $inc: {
+        //             attempt: 1,
+        //         },
+        //     }
+        //     const result = await addcontentCollection.updateOne(query, updateDoc, options)
+        //     res.send(result)
+        //     console.log(updateDoc)
+        // })
         // admincontrol
         app.delete('/userdelete/:id', async (req, res) => {
             const id = req.params.id;
