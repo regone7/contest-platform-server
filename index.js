@@ -234,6 +234,26 @@ async function run() {
             const result = await cursor;
             res.send(result)
         })
+        app.patch('/userwin/:id', async (req, res) => {
+            const item = req.body;
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const updatedDoc = {
+              $set: {
+                win: item.win
+              }
+            }
+      
+            const result = await paymentCollection.updateOne(filter, updatedDoc)
+            res.send(result);
+          })
+        //   user dashboard
+        app.get('/myuserattempt/:ur_email', async (req, res) => {
+            const ur_email = req.params.ur_email;
+            const quary = { ur_email: ur_email }
+            const result = await paymentCollection.find(quary).toArray();
+            res.send(result)
+        })
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
