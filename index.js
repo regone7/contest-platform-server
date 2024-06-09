@@ -221,6 +221,19 @@ async function run() {
             res.send(result)
             console.log(updateDoc)
         })
+         //contentcreatercontrole userlist
+         app.get('/userlistes', async (req, res) => {
+            const result = await paymentCollection.find().toArray()
+            res.send(result)
+        })
+        app.get('/userlistess/:id', async (req, res) => {
+            // console.log('cookirss',req.cookies)
+            const id = req.params.id;
+            const quary = { _id: new ObjectId(id) }
+            const cursor = paymentCollection.findOne(quary);
+            const result = await cursor;
+            res.send(result)
+        })
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
