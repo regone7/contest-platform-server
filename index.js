@@ -8,6 +8,8 @@ const app = express()
 const corsOptions = {
     origin: [
         'http://localhost:5173',
+        'https://contest-creation-platfor-e05ad.web.app',
+        'https://contest-creation-platfor-e05ad.firebaseapp.com',
 
     ],
     credentials: true,
@@ -28,7 +30,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
 
         const userCollection = client.db("contestDB").collection("users");
         const addcontentCollection = client.db("contestDB").collection("contents");
@@ -255,7 +257,7 @@ async function run() {
             res.send(result)
         })
 
-        await client.db("admin").command({ ping: 1 });
+        // await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
